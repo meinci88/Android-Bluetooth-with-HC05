@@ -1,0 +1,17 @@
+<resources>
+	<string name="app_name">TabLayout with Bottom Navigation Android</string>
+	<string name="Tab_1">Tab 1</string>
+	<string name="Tab_2">Tab 2</string>
+	<string name="Tab_3">Tab 3</string>
+	<string name="Home">Home</string>
+	<string name="Settings">Settings</string>
+	<string name="Downloads">Downloads</string>
+	<!-- TODO: Remove or change this placeholder text -->
+	<string name="hello_blank_fragment">Hello blank fragment</string>
+	<string name="hello_downloads">hello_downloads</string>
+	<string name="hello_Settings">hello_Settings</string>
+	<string name="hello_Home">hello_Home</string>
+	<string name="hello_tabOne">hello_tabOne</string>
+	<string name="hello_fragmentTwo">hello_fragmentTwo</string>
+	<string name="hello_fragmentThree">hello_fragmentThree</string>
+</resources>

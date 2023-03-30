@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item
+		android:id="@+id/bottom_home"
+		android:icon="@drawable/baseline_home_24"
+		android:title="@string/Home" />
+	<item
+		android:id="@+id/bottom_settings"
+		android:icon="@drawable/baseline_settings_24"
+		android:title="@string/Settings" />
+	<item
+		android:id="@+id/bottom_downloads"
+		android:icon="@drawable/baseline_download_24"
+		android:title="@string/Downloads" />
+
+</menu>
