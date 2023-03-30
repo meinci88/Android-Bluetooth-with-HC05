@@ -46,9 +46,7 @@ public class MainActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(activity_main);
 
-		/*textView = findViewById(R.id.textViewMain);
-		textView1 = findViewById(R.id.textViewMain1);
-		textView2 = findViewById(R.id.textViewMain2);*/
+
 		BTconnect();
 
 
@@ -174,10 +172,7 @@ public class MainActivity extends AppCompatActivity {
 			btSocket = HC05A.createRfcommSocketToServiceRecord(MY_UUID);
 			String dev;
 			String devName;
-			//dev = String.valueOf(btSocket.getRemoteDevice());
-			//devName = String.valueOf(btAdapter.getBondedDevices());
-			//TextView textViewdev = findViewById(R.id.textviewDev);
-			//textViewdev.setText("Device: " + devName);
+		
 
 			ImageView imageView = (ImageView) findViewById(R.id.bluetoothImage);
 			imageView.setBackgroundResource(R.drawable.baseline_bluetooth_36);
