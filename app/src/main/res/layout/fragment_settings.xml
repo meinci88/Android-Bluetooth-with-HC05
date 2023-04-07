@@ -9,9 +9,10 @@
 
 	<Button
 		android:id="@+id/button_devices"
-		android:layout_width="150dp"
-		android:layout_height="49dp"
+		android:layout_width="145dp"
+		android:layout_height="65dp"
 		android:text="Devices"
+		android:visibility="invisible"
 		app:layout_constraintBottom_toTopOf="@+id/textviewDev"
 		app:layout_constraintEnd_toStartOf="@+id/button_btOn"
 		app:layout_constraintHorizontal_bias="0.0"
@@ -21,7 +22,7 @@
 	<Button
 		android:id="@+id/button_btOn"
 		android:layout_width="172dp"
-		android:layout_height="45dp"
+		android:layout_height="67dp"
 		android:layout_marginStart="89dp"
 		android:layout_marginBottom="4dp"
 		android:text="Bluetooth On"
@@ -29,8 +30,6 @@
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toEndOf="@+id/button_devices"
 		app:layout_constraintTop_toTopOf="parent" />
-
-
 
 	<TextView
 		android:id="@+id/textviewDev"
@@ -41,5 +40,39 @@
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toBottomOf="@+id/button_devices" />
 
+	<LinearLayout
+		android:id="@+id/linearLayout"
+		android:layout_width="413dp"
+		android:layout_height="413dp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent">
+
+		<ListView
+			android:id="@+id/listView"
+			style="@android:style/Widget.DeviceDefault.Light.ExpandableListView"
+			android:layout_width="match_parent"
+			android:layout_height="200dp"
+			android:background="#82B1FF"
+			android:visibility="visible"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintHorizontal_bias="1.0"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintVertical_bias="1.0" />
+	</LinearLayout>
+
+	<TextView
+		android:id="@+id/textView"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="32dp"
+		android:text="Device List"
+		android:textAlignment="center"
+		android:textSize="30dp"
+		android:textStyle="bold"
+		app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

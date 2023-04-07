@@ -17,17 +17,23 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 public class FragmentSettings extends Fragment {
 	TextView textView;
 	Button button;
 	Button button_btOn;
+	ListView listView;
 	BluetoothAdapter btAdapter;
+	private ArrayList<String> arrayList;
+	private ArrayAdapter<String> adapter;
 	private static final int REQUEST_ENABLE_BT = 0;
 
 	String[] permissions = {"android.permission.BLUETOOTH_CONNECT"};
@@ -40,6 +46,26 @@ public class FragmentSettings extends Fragment {
 		textView = view.findViewById(R.id.textviewDev);
 		button = view.findViewById(R.id.button_devices);
 		button_btOn = view.findViewById(R.id.button_btOn);
+		listView = view.findViewById(R.id.listView);
+		//listView = (ListView) view.findViewById(R.id.listView);
+		arrayList = new ArrayList<>();
+		adapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_list_item_1, arrayList);
+
+		if (btAdapter.isEnabled()) {
+			textView.setText(" ");
+			if (ActivityCompat.checkSelfPermission(getContext(),
+					android.Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+				requestPermissions(permissions, 80);
+				return;
+			}
+			Set<BluetoothDevice> devices = btAdapter.getBondedDevices();
+			for (BluetoothDevice device:devices){
+				listView.setAdapter(adapter);
+				arrayList.add(device.getName() + ":  " + String.valueOf(device));
+				adapter.notifyDataSetChanged();
+			}
+		}
+
 
 		button_btOn.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -55,7 +81,7 @@ public class FragmentSettings extends Fragment {
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (btAdapter.isEnabled()) {
+				/*if (btAdapter.isEnabled()) {
 					textView.setText(" ");
 					if (ActivityCompat.checkSelfPermission(getContext(),
 							android.Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
@@ -64,9 +90,11 @@ public class FragmentSettings extends Fragment {
 					}
 					Set<BluetoothDevice> devices = btAdapter.getBondedDevices();
 					for (BluetoothDevice device:devices){
-						textView.append("\nDevice: " + device.getName() + "," + device);
+						listView.setAdapter(adapter);
+						arrayList.add(device.getName() + ":  " + String.valueOf(device));
+						adapter.notifyDataSetChanged();
 					}
-				}
+				}*/
 			}
 		});
 	}
