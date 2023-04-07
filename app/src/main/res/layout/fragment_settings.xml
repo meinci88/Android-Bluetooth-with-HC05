@@ -12,6 +12,7 @@
 		android:layout_width="150dp"
 		android:layout_height="49dp"
 		android:text="Devices"
+		app:layout_constraintBottom_toTopOf="@+id/textviewDev"
 		app:layout_constraintEnd_toStartOf="@+id/button_btOn"
 		app:layout_constraintHorizontal_bias="0.0"
 		app:layout_constraintStart_toStartOf="parent"
@@ -21,23 +22,20 @@
 		android:id="@+id/button_btOn"
 		android:layout_width="172dp"
 		android:layout_height="45dp"
+		android:layout_marginStart="89dp"
+		android:layout_marginBottom="4dp"
 		android:text="Bluetooth On"
+		app:layout_constraintBottom_toTopOf="@+id/textviewDev"
 		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toEndOf="@+id/button_devices"
 		app:layout_constraintTop_toTopOf="parent" />
 
-	<ListView
-		android:id="@+id/listView"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		app:layout_constraintBottom_toTopOf="@+id/button_devices"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent" />
+
 
 	<TextView
 		android:id="@+id/textviewDev"
-		android:layout_width="411dp"
-		android:layout_height="91dp"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintHorizontal_bias="0.0"
 		app:layout_constraintStart_toStartOf="parent"
