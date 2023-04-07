@@ -70,18 +70,35 @@ public class FragmentSettings extends Fragment {
 		button_btOn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				arrayList.clear();
 				if (!btAdapter.isEnabled()){
 					requestPermissions(permissions, 80);
 					Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
 					startActivityForResult(intent, REQUEST_ENABLE_BT);
 					}
+				if (btAdapter.isEnabled()) {
+					textView.setText(" ");
+					showToast("Bluetooth ist schon  eingeschaltet");
+					if (ActivityCompat.checkSelfPermission(getContext(),
+							android.Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+						requestPermissions(permissions, 80);
+						return;
+					}
+					Set<BluetoothDevice> devices = btAdapter.getBondedDevices();
+					for (BluetoothDevice device:devices){
+						listView.setAdapter(adapter);
+						arrayList.add(device.getName() + ":  " + String.valueOf(device));
+						adapter.notifyDataSetChanged();
+					}
 				}
+			}
 		});
 
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				/*if (btAdapter.isEnabled()) {
+				arrayList.clear();
+				if (btAdapter.isEnabled()) {
 					textView.setText(" ");
 					if (ActivityCompat.checkSelfPermission(getContext(),
 							android.Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
@@ -94,13 +111,18 @@ public class FragmentSettings extends Fragment {
 						arrayList.add(device.getName() + ":  " + String.valueOf(device));
 						adapter.notifyDataSetChanged();
 					}
-				}*/
+				}else {
+					listView.setAdapter(adapter);
+					arrayList.clear();
+					adapter.notifyDataSetChanged();
+					showToast("Bluetooth ist momentan  nicht eingeschaltet");
+				}
 			}
 		});
 	}
 
 	private void showToast(String msg){
-		Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
+		Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
 	}
 
 	@Override

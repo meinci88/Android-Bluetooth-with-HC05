@@ -1,5 +1,6 @@
 package com.example.tablayoutwithbottomnavigationandroid;
 
+import static com.example.tablayoutwithbottomnavigationandroid.R.drawable.icon_bl_on;
 import static com.example.tablayoutwithbottomnavigationandroid.R.layout.activity_main;
 
 import androidx.annotation.NonNull;
@@ -183,12 +184,12 @@ public class MainActivity extends AppCompatActivity {
 			String dev;
 			String devName;
 			ImageView imageView = (ImageView) findViewById(R.id.bluetoothImage);
-			imageView.setBackgroundResource(R.drawable.baseline_bluetooth_36);
+			imageView.setBackgroundResource(icon_bl_on);
 			btSocket.connect();
 		} catch (IOException e) {
 			e.printStackTrace();
 			ImageView imageView = (ImageView)findViewById(R.id.bluetoothImage);
-			imageView.setBackgroundResource(R.drawable.baseline_bluetooth_disabled_36);
+			imageView.setBackgroundResource(R.drawable.icon_bl_off);
 		}
 	}
 }
