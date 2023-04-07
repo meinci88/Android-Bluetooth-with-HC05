@@ -11,12 +11,15 @@ import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -25,6 +28,7 @@ import com.google.android.material.tabs.TabLayout;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Set;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,16 +39,24 @@ public class MainActivity extends AppCompatActivity {
 	ViewPagerAdapter viewPagerAdapter;
 	BottomNavigationView bottomNavigationView;
 	FrameLayout frameLayout;
-	TextView textView;
+
 	TextView textView1;
 	TextView textView2;
+	BluetoothAdapter btAdapter;
+	String [] permissions={"android.permission.BLUETOOTH_CONNECT"};
 
 	private ItemViewModel viewModel;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		//requestPermissions(permissions, 80);
+
 		setContentView(activity_main);
+
+		btAdapter = BluetoothAdapter.getDefaultAdapter();
+
 
 
 		BTconnect();
@@ -153,7 +165,6 @@ public class MainActivity extends AppCompatActivity {
 					case R.id.bottom_downloads:
 						getSupportFragmentManager().beginTransaction()
 								.replace(R.id.frameLayout, new FragmentDownloads()).commit();
-
 						return true;
 				}
 				return false;
@@ -162,18 +173,15 @@ public class MainActivity extends AppCompatActivity {
 	//endregion
 
 	}
-
 	@SuppressLint("MissingPermission")
 	public void BTconnect() {
-		BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+		//BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
 		BluetoothDevice HC05A = btAdapter.getRemoteDevice("98:D3:32:70:E3:82");
 		//BluetoothDevice HC05B = btAdapter.getRemoteDevice("98:D3:32:70:E0:FD");
 		try {
 			btSocket = HC05A.createRfcommSocketToServiceRecord(MY_UUID);
 			String dev;
 			String devName;
-		
-
 			ImageView imageView = (ImageView) findViewById(R.id.bluetoothImage);
 			imageView.setBackgroundResource(R.drawable.baseline_bluetooth_36);
 			btSocket.connect();

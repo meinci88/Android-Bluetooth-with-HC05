@@ -1,14 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	tools:context=".FragmentSettings">
 
-	<!-- TODO: Update blank fragment layout -->
-	<TextView
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:text="@string/hello_Settings" />
+	<Button
+		android:id="@+id/button_devices"
+		android:layout_width="150dp"
+		android:layout_height="49dp"
+		android:text="Devices"
+		app:layout_constraintEnd_toStartOf="@+id/button_btOn"
+		app:layout_constraintHorizontal_bias="0.0"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+	<Button
+		android:id="@+id/button_btOn"
+		android:layout_width="172dp"
+		android:layout_height="45dp"
+		android:text="Bluetooth On"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+
+	<ListView
+		android:id="@+id/listView"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		app:layout_constraintBottom_toTopOf="@+id/button_devices"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+
+	<TextView
+		android:id="@+id/textviewDev"
+		android:layout_width="411dp"
+		android:layout_height="91dp"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="0.0"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/button_devices" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
