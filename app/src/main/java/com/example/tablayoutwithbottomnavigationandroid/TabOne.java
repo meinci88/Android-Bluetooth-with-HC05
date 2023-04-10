@@ -3,6 +3,7 @@ package com.example.tablayoutwithbottomnavigationandroid;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
@@ -10,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import com.example.tablayoutwithbottomnavigationandroid.databinding.FragmentTabOneBinding;
 
 public class TabOne extends Fragment {
 
@@ -20,31 +23,29 @@ public class TabOne extends Fragment {
 	SeekBar seekBar1;
 	SeekBar seekBar2;
 	SeekBar seekBar3;
+	private FragmentTabOneBinding binding;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
+		binding = FragmentTabOneBinding.inflate(inflater, container, false);
+		View view = binding.getRoot();
 
-		return inflater.inflate(R.layout.fragment_tab_one, container, false);
+		return view;
 	}
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		textViewSeekbar1 = view.findViewById(R.id.textViewSeekbarVal1);
-		textViewSeekbar2 = view.findViewById(R.id.textViewSeekbarVal2);
-		textViewSeekbar3 = view.findViewById(R.id.textViewSeekbarVal3);
+
 		viewModel = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);
 
-		seekBar1 = view.findViewById(R.id.seekBar1);
-		seekBar2 = view.findViewById(R.id.seekBar2);
-		seekBar3 = view.findViewById(R.id.seekBar3);
-
-		seekBar1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+		binding.seekBar1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 				String value = "A" + progress;
-				//viewModel.setData(String.valueOf(seekBar1.getProgress()));
-				textViewSeekbar1.setText(value);
+				binding.seekBar2.setProgress(0);
+				binding.seekBar3.setProgress(0);
+				binding.textViewSeekbarVal1.setText(value);
 				viewModel.setData(value);
 			}
 			@Override
@@ -55,12 +56,13 @@ public class TabOne extends Fragment {
 			}
 		});
 
-		seekBar2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+		binding.seekBar2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 				String value = "B" + progress;
-				//viewModel.setData(String.valueOf(seekBar1.getProgress()));
-				textViewSeekbar2.setText(value);
+				binding.seekBar1.setProgress(0);
+				binding.seekBar3.setProgress(0);
+				binding.textViewSeekbarVal2.setText(value);
 				viewModel.setData1(value);
 			}
 			@Override
@@ -71,12 +73,13 @@ public class TabOne extends Fragment {
 			}
 		});
 
-		seekBar3.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+		binding.seekBar3.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 				String value = "C" + progress;
-				//viewModel.setData(String.valueOf(seekBar1.getProgress()));
-				textViewSeekbar3.setText(value);
+				binding.seekBar1.setProgress(0);
+				binding.seekBar2.setProgress(0);
+				binding.textViewSeekbarVal3.setText(value);
 				viewModel.setData2(value);
 			}
 			@Override
@@ -86,7 +89,5 @@ public class TabOne extends Fragment {
 			public void onStopTrackingTouch(SeekBar seekBar) {
 			}
 		});
-
-
 	}
 }

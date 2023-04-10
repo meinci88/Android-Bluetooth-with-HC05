@@ -1,27 +1,23 @@
 package com.example.tablayoutwithbottomnavigationandroid;
 
-import static com.example.tablayoutwithbottomnavigationandroid.R.drawable.icon_bl_on;
-import static com.example.tablayoutwithbottomnavigationandroid.R.layout.activity_main;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.tablayoutwithbottomnavigationandroid.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.tabs.TabLayout;
@@ -29,14 +25,13 @@ import com.google.android.material.tabs.TabLayout;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.Set;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 	static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 	BluetoothSocket btSocket = null;
 	TabLayout tabLayout;
-	ViewPager2 viewPager2;
+	ViewPager viewPager;
 	ViewPagerAdapter viewPagerAdapter;
 	BottomNavigationView bottomNavigationView;
 	FrameLayout frameLayout;
@@ -47,18 +42,18 @@ public class MainActivity extends AppCompatActivity {
 	String [] permissions={"android.permission.BLUETOOTH_CONNECT"};
 
 	private ItemViewModel viewModel;
-
+	private ActivityMainBinding binding;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		//requestPermissions(permissions, 80);
 
-		setContentView(activity_main);
+		binding = ActivityMainBinding.inflate(getLayoutInflater());
+		View view = binding.getRoot();
+		setContentView(view);
 
 		btAdapter = BluetoothAdapter.getDefaultAdapter();
-
-
 
 		BTconnect();
 
@@ -98,22 +93,20 @@ public class MainActivity extends AppCompatActivity {
 			}
 		});
 
-		//textView = findViewById(R.id.textViewMain);
-		tabLayout = findViewById(R.id.tabLayout);
-		viewPager2 = findViewById(R.id.viewPager);
+		//viewPager = findViewById(R.id.viewPager);
 		viewPagerAdapter = new ViewPagerAdapter(this);
-		viewPager2.setAdapter(viewPagerAdapter);
+		binding.viewPager.setAdapter(viewPagerAdapter);
 		bottomNavigationView = findViewById(R.id.bottomNav);
 		frameLayout = findViewById(R.id.frameLayout);
 
 		//region Tablayout addOnTabSelectedListener
-		tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+		binding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
 			@Override
 			public void onTabSelected(TabLayout.Tab tab) {
-				viewPager2.setVisibility(View.VISIBLE);
-				frameLayout.setVisibility(View.GONE);
-				viewPager2.setCurrentItem(tab.getPosition());
+				binding.viewPager.setVisibility(View.VISIBLE);
+				binding.frameLayout.setVisibility(View.GONE);
+				binding.viewPager.setCurrentItem(tab.getPosition());
 			}
 
 			@Override
@@ -123,22 +116,21 @@ public class MainActivity extends AppCompatActivity {
 
 			@Override
 			public void onTabReselected(TabLayout.Tab tab) {
-				viewPager2.setVisibility(View.VISIBLE);
-				frameLayout.setVisibility(View.GONE);
-
+				binding.viewPager.setVisibility(View.VISIBLE);
+				binding.frameLayout.setVisibility(View.GONE);
 			}
 		});
 
 		//endregion
 
-		viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+		binding.viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
 			@Override
 			public void onPageSelected(int position) {
 				switch (position) {
 					case 0:
 					case 1:
 					case 2:
-						tabLayout.getTabAt(position).select();
+						binding.tabLayout.getTabAt(position).select();
 				}
 				super.onPageSelected(position);
 			}
@@ -149,8 +141,8 @@ public class MainActivity extends AppCompatActivity {
 			@SuppressLint("NonConstantResourceId")
 			@Override
 			public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-				frameLayout.setVisibility(View.VISIBLE);
-				viewPager2.setVisibility(View.GONE);
+				binding.frameLayout.setVisibility(View.VISIBLE);
+				binding.viewPager.setVisibility(View.GONE);
 				switch (item.getItemId()) {
 
 					case R.id.bottom_home:
@@ -183,13 +175,13 @@ public class MainActivity extends AppCompatActivity {
 			btSocket = HC05A.createRfcommSocketToServiceRecord(MY_UUID);
 			String dev;
 			String devName;
-			ImageView imageView = (ImageView) findViewById(R.id.bluetoothImage);
-			imageView.setBackgroundResource(icon_bl_on);
+			ImageView imageView = (ImageView) findViewById(R.id.bluetoothImage1);
+			imageView.setBackgroundResource(R.drawable.rainbowcol);
 			btSocket.connect();
 		} catch (IOException e) {
 			e.printStackTrace();
-			ImageView imageView = (ImageView)findViewById(R.id.bluetoothImage);
-			imageView.setBackgroundResource(R.drawable.icon_bl_off);
+			ImageView imageView = (ImageView)findViewById(R.id.bluetoothImage1);
+			imageView.setBackgroundResource(R.drawable.rainbowcol1);
 		}
 	}
 }

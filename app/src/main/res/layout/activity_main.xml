@@ -8,11 +8,23 @@
 	android:orientation="vertical"
 	android:background="@color/dark_blue"
 	tools:context=".MainActivity">
+	<FrameLayout
+		android:orientation="horizontal"
+		android:layout_width="match_parent"
+		android:layout_height="40dp">
 
-	<ImageView
-		android:id="@+id/bluetoothImage"
-		android:layout_width="36dp"
-		android:layout_height="36dp"/>
+		<ImageView
+			android:id="@+id/bluetoothImage1"
+			android:layout_width="36dp"
+			android:layout_height="36dp" />
+
+		<ImageView
+			android:id="@+id/bluetoothImage2"
+			android:layout_width="36dp"
+			android:layout_height="36dp"
+			android:layout_marginHorizontal="370dp"/>
+	</FrameLayout>
+
 
 	<com.google.android.material.tabs.TabLayout
 		android:id="@+id/tabLayout"
