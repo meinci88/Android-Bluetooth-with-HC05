@@ -11,12 +11,24 @@
 	<FrameLayout
 		android:orientation="horizontal"
 		android:layout_width="match_parent"
-		android:layout_height="40dp">
+		android:layout_height="60dp"
+		>
 
 		<ImageView
 			android:id="@+id/bluetoothImage1"
 			android:layout_width="36dp"
 			android:layout_height="36dp" />
+
+		<TextView
+			android:id="@+id/textviewDev"
+			android:layout_width="310dp"
+			android:layout_height="40dp"
+			android:layout_gravity="center"
+			android:text="Device"
+			android:textAlignment="center"
+			android:textSize="15sp">
+
+		</TextView>
 
 		<ImageView
 			android:id="@+id/bluetoothImage2"
@@ -63,7 +75,7 @@
 		android:layout_width="wrap_content"
 		android:layout_height="match_parent"
 		android:layout_weight="1"
-		android:visibility="gone"/>
+		android:visibility="visible" />
 
 	<com.google.android.material.bottomnavigation.BottomNavigationView
 		android:id="@+id/bottomNav"

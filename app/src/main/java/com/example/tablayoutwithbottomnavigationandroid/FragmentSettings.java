@@ -13,21 +13,26 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Set;
 
 public class FragmentSettings extends Fragment {
-	TextView textView;
+	ItemViewModel viewModel;
+	Spinner spinner;
 	Button button;
 	Button button_btOn;
 	ListView listView;
@@ -41,18 +46,17 @@ public class FragmentSettings extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
+		viewModel = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);
 
 		btAdapter = BluetoothAdapter.getDefaultAdapter();
-		textView = view.findViewById(R.id.textviewDev);
 		button = view.findViewById(R.id.button_devices);
 		button_btOn = view.findViewById(R.id.button_btOn);
 		listView = view.findViewById(R.id.listView);
-		//listView = (ListView) view.findViewById(R.id.listView);
+		spinner = view.findViewById(R.id.spinner);
 		arrayList = new ArrayList<>();
 		adapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_list_item_1, arrayList);
 
 		if (btAdapter.isEnabled()) {
-			textView.setText(" ");
 			if (ActivityCompat.checkSelfPermission(getContext(),
 					android.Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
 				requestPermissions(permissions, 80);
@@ -60,12 +64,18 @@ public class FragmentSettings extends Fragment {
 			}
 			Set<BluetoothDevice> devices = btAdapter.getBondedDevices();
 			for (BluetoothDevice device:devices){
+				spinner.setAdapter(adapter);
 				listView.setAdapter(adapter);
 				arrayList.add(device.getName() + ":  " + String.valueOf(device));
 				adapter.notifyDataSetChanged();
 			}
 		}
-
+		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {//**** ListView Item select *****
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+						viewModel.setName(listView.getItemAtPosition(position).toString());// Position der angeklickten ListView
+					}
+				});
 
 		button_btOn.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -77,7 +87,6 @@ public class FragmentSettings extends Fragment {
 					startActivityForResult(intent, REQUEST_ENABLE_BT);
 					}
 				if (btAdapter.isEnabled()) {
-					textView.setText(" ");
 					showToast("Bluetooth ist schon  eingeschaltet");
 					if (ActivityCompat.checkSelfPermission(getContext(),
 							android.Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
@@ -99,7 +108,7 @@ public class FragmentSettings extends Fragment {
 			public void onClick(View v) {
 				arrayList.clear();
 				if (btAdapter.isEnabled()) {
-					textView.setText(" ");
+
 					if (ActivityCompat.checkSelfPermission(getContext(),
 							android.Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
 						requestPermissions(permissions, 80);

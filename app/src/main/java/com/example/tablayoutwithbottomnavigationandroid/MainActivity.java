@@ -1,7 +1,9 @@
 package com.example.tablayoutwithbottomnavigationandroid;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
@@ -10,7 +12,9 @@ import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Context;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -43,11 +47,10 @@ public class MainActivity extends AppCompatActivity {
 
 	private ItemViewModel viewModel;
 	private ActivityMainBinding binding;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		//requestPermissions(permissions, 80);
 
 		binding = ActivityMainBinding.inflate(getLayoutInflater());
 		View view = binding.getRoot();
@@ -57,11 +60,20 @@ public class MainActivity extends AppCompatActivity {
 
 		BTconnect();
 
-
 		viewModel = new ViewModelProvider(this).get(ItemViewModel.class);
+
+		//****** Datenübertragung von fragmet_settings gebundenes BT-Device***********************
+		viewModel.getName().observe(this, new Observer<String>() {
+			@Override
+			public void onChanged(String s) {
+				binding.textviewDev.setText(s);
+			}
+		});
+		//*****************************************************************************************
 
 		viewModel.getSelectedItem().observe(this, item ->{
 			try {
+
 				OutputStream outputStream = btSocket.getOutputStream();
 				//textView.setText(item);
 				outputStream.write(item.getBytes(StandardCharsets.UTF_8));
@@ -111,7 +123,6 @@ public class MainActivity extends AppCompatActivity {
 
 			@Override
 			public void onTabUnselected(TabLayout.Tab tab) {
-
 			}
 
 			@Override
